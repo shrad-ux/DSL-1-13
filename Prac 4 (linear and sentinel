@@ -1,0 +1,62 @@
+n = int(input("Enter number of students: "))
+roll = []
+
+
+def enterval(roll, n):
+    for i in range(n):
+        m = int(input("Enter roll number: "))
+        roll.append(m)
+    print("Final list for roll numbers is ")
+    print(roll)
+    print()
+
+
+def linear(roll, n):
+    print("$ Linear Search $")
+    find = int(input("Enter roll number to be found: "))
+    flag = False
+    for i in range(n):
+        if find == roll[i]:
+            print("Student found at", i)
+            flag = True
+            break
+    if flag == False:
+        print("Student not found!!")
+    print()
+
+
+def sentinel(roll, n):
+    print("$ Sentinel Search $")
+    find = int(input("Enter roll number to be found: "))
+    i = 0
+    last = roll[n - 1]
+    roll[n - 1] = find
+    while roll[i] != find:
+        i += 1
+    roll[n - 1] = last
+    if (i < n - 1) or (roll[n - 1] == find):
+        print("Student found at", i)
+    else:
+        print("Student not found!!")
+    print()
+
+
+f = True
+while f:
+    print("Choices: ")
+    print("1. Enter values")
+    print("2. Linear Search")
+    print("3. Sentinel Search")
+    print("4. Exit")
+    ch = int(input("Enter your choice: "))
+    if ch == 1:
+        enterval(roll, n)
+    elif ch == 2:
+        linear(roll, n)
+    elif ch == 3:
+        sentinel(roll, n)
+    elif ch == 4:
+        print("Thank you")
+        f = False
+    else:
+        print("Invalid Input")
