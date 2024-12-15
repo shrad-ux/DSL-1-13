@@ -1,0 +1,91 @@
+n = int(input("Enter number of students: "))
+roll = []
+
+
+def enterval(roll, n):
+    for i in range(n):
+        m = int(input("Enter roll number: "))
+        roll.append(m)
+    print("Final list of roll numbers: ")
+    print(roll)
+    print()
+    for i in range(n):
+        for j in range(i + 1, n):
+            if (roll[i] > roll[j]):
+                temp = roll[i]
+                roll[i] = roll[j]
+                roll[j] = temp
+    print("Sorted list of roll numbers: ")
+    print(roll)
+    print()
+
+
+def binary(roll, n):
+    print("$ Binary Search $")
+    find = int(input("Enter roll number to be found: "))
+    st = 0
+    en = n - 1
+    flag = False
+    while (st <= en):
+        mid = st + int((en - st) / 2)
+        if (find == roll[mid]):
+            print("Student found at", mid)
+            flag = True
+            break
+        elif (find > roll[mid]):
+            st = mid + 1
+        else:
+            en = mid - 1
+    if (flag == False):
+        print("Student not found!!")
+    print()
+
+
+# Fibonacci search
+def fibonacci(roll, n):
+    print("$ Fibonacci Search $")
+    offset = -1
+    fib1 = 0
+    fib2 = 1
+    fibm = fib1 + fib2
+    find = int(input("Enter roll number to be found: "))
+    while (fibm < n):
+        fib2 = fib1
+        fib1 = fibm
+        fibm = fib1 + fib2
+    while (fibm > 1):
+        i = min(offset + fibm, n - 1)
+        if (roll[i] < find):
+            offset = i
+            fibm = fib1
+            fib1 = fib2
+            fib2 = fibm - fib1
+        elif (roll[i] > find):
+            fibm = fib2
+            fib1 = fib1 - fibm
+            fib2 = fibm - fib1
+        else:
+            print("Student found at ", i)
+            if (fib1 and roll[n - 1] == find):
+                print("Student found at ", n - 1)
+            else:
+                print("Student not found!!")
+    print()
+
+
+f = True
+while (f):
+    print("Choices: ")
+    print("1. Enter values\n2. Binary Search\n3. Fibonacci Search\n4. Exit")
+    ch = int(input("Enter your choice: "))
+    if (ch == 1):
+        enterval(roll, n)
+    elif (ch == 2):
+        binary(roll, n)
+    elif (ch == 3):
+        fibonacci(roll, n)
+    elif (ch == 4):
+        print("Thank you")
+        f = False
+    else:
+        print("Invalid Input")
