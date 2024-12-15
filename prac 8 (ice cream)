@@ -10,7 +10,7 @@ public:
 
     node(int roll) {
         this->roll = roll;
-        this->next = roll;
+        this->next = next;
     }
 
 public:
