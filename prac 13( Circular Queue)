@@ -1,0 +1,126 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+const short M = 5;
+
+class pizza {
+    int front, rear, order[M];
+public:
+    pizza() {
+        front = -1;
+        rear = -1;
+    }
+
+public:
+    bool isFull();
+    bool isEmpty();
+    void addOrder();
+    void serve();
+    void display();
+};
+
+bool pizza::isFull() {
+    if (front == (rear + 1) % M) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool pizza::isEmpty() {
+    return (rear == -1) ? true : false;
+}
+
+void pizza::addOrder() {
+    if (!isFull()) {
+        char c;
+        cout << "Enter Order Number: ";
+        if (front == -1 && rear == -1) {
+            front = 0;
+            rear = 0;
+            cin >> order[rear];
+        } else {
+            rear = (rear + 1) % M;
+            cin >> order[rear];
+        }
+
+        cout << "Do you want to add another order? (y/n): ";
+        cin >> c;
+
+        if (c == 'y' || c == 'Y') {
+            addOrder();
+        } else {
+            return;
+        }
+    } else {
+        cout << "Queue Overflow" << endl;
+        return;
+    }
+}
+
+void pizza::serve() {
+    if (!isEmpty()) {
+        if (front == rear) {
+            cout << "Order served is: " << order[front] << endl;
+            front = -1;
+            rear = -1;
+        } else {
+            cout << "Order served is: " << order[front] << endl;
+            front = (front + 1) % M;
+        }
+    } else {
+        cout << "No orders currently" << endl;
+        return;
+    }
+}
+
+void pizza::display() {
+    if (!isEmpty()) {
+        cout << "Orders in the queue: ";
+        for (int i = front; i != rear; i = (i + 1) % M) {
+            cout << order[i] << " ";
+        }
+        cout << order[rear] << endl;
+    } else {
+        cout << "There are no Orders !!" << endl;
+        return;
+    }
+}
+
+int main() {
+    pizza p;
+    bool flag = true;
+
+    while (flag) {
+        cout << "\nChoices: " << endl;
+        cout << "1. Place an order\n2. Display an Order\n3. Serve the order\n4. Exit" << endl;
+        cout << "Enter your choice: ";
+        int ch;
+        cin >> ch;
+        cout << endl;
+
+        switch (ch) {
+            case 1:
+                p.addOrder();
+                break;
+
+            case 2:
+                p.display();
+                break;
+
+            case 3:
+                p.serve();
+                break;
+
+            case 4:
+                flag = false;
+                cout << "Program Ended !!" << endl;
+                break;
+
+            default:
+                cout << "Invalid Choice " << endl;
+                break;
+        }
+    }
+}
