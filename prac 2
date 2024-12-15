@@ -1,0 +1,112 @@
+marks = []
+
+
+# Function to input marks
+def enterval(n):
+    for i in range(n):
+        m = input("Enter marks (or 'ab' if absent): ")
+        if m.lower() == 'ab':  # Handle string for absent
+            marks.append(m)
+        else:
+            try:
+                u = int(m)  # Convert input into an integer if valid
+                marks.append(u)
+            except ValueError:
+                print("Invalid input. Please enter numeric values or 'ab' for absence.")
+    print()
+    print("Final list of marks: ")
+    print(marks)
+    print()
+
+
+# Function to calculate the average score
+def avg(n):
+    total_sum = 0
+    valid_count = 0
+    for i in range(n):
+        if marks[i] != 'ab':  # Ignore absentees
+            total_sum += marks[i]
+            valid_count += 1
+    if valid_count > 0:
+        average = total_sum / valid_count
+        print("Average score of class is:", average)
+    else:
+        print("No valid scores to calculate average.")
+    print()
+
+
+# Function to find the highest and lowest score
+def score(n):
+    high = -1
+    low = 101
+    for i in range(n):
+        if marks[i] != 'ab':  # Ignore absentees
+            if marks[i] > high:
+                high = marks[i]
+            if marks[i] < low:
+                low = marks[i]
+    if high != -1 and low != 101:
+        print("Highest score is:", high)
+        print("Lowest score is:", low)
+    else:
+        print("No valid scores to determine high/low values.")
+    print()
+
+
+# Function to count number of absent students
+def abst(n):
+    count = 0
+    for i in range(n):
+        if marks[i] == 'ab':  # Check for absent students
+            count += 1
+    if count == 0:
+        print("No student was absent for the test.")
+    else:
+        print(count, "students were absent for the test.")
+    print()
+
+
+# Function to find the marks with the highest frequency
+def highfreq(n):
+    # Create a dictionary for counting frequencies
+    frequency = {}
+    for i in range(n):
+        if marks[i] != 'ab':  # Ignore absentees
+            if marks[i] in frequency:
+                frequency[marks[i]] += 1
+            else:
+                frequency[marks[i]] = 1
+    if frequency:
+        max_freq = max(frequency.values())
+        most_common_marks = [k for k, v in frequency.items() if v == max_freq]
+        print("Marks with highest frequency are:", most_common_marks, "with frequency:", max_freq)
+    else:
+        print("No valid scores to determine frequency.")
+    print()
+
+
+# Main menu loop
+flag = True
+while flag:
+    try:
+        n = int(input("Enter the number of students: "))
+        while flag:
+            print("\nChoices: \n1. Enter values\n2. Average score of class\n3. Highest and lowest score of class\n4. Number of absent students\n5. Marks with highest frequency\n6. Exit")
+            ch = int(input("Enter your choice: "))
+            if ch == 1:
+                enterval(n)
+            elif ch == 2:
+                avg(n)
+            elif ch == 3:
+                score(n)
+            elif ch == 4:
+                abst(n)
+            elif ch == 5:
+                highfreq(n)
+            elif ch == 6:
+                print("Thank you!!")
+                flag = False
+            else:
+                print("Invalid choice. Please select a valid option.")
+    except ValueError:
+        print("Please enter a valid number for the number of students.")
