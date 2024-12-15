@@ -1,0 +1,76 @@
+roll = []
+
+
+# Function to collect student percentages
+def enterval():
+    n = int(input("Enter number of students: "))
+    for i in range(n):
+        m = float(input("Enter percentage: "))
+        roll.append(m)
+    print("Final list: ", roll)
+    print()
+
+
+# Partition function used in quicksort
+def partition(a, low, high):
+    pivot = a[high]
+    i = low - 1
+    for j in range(low, high):
+        if a[j] <= pivot:
+            i += 1
+            # Swap
+            a[i], a[j] = a[j], a[i]
+    # Swap the pivot into the correct position
+    a[i + 1], a[high] = a[high], a[i + 1]
+    return i + 1
+
+
+# Quicksort function
+def quicksort(a, low, high):
+    if low < high:
+        pi = partition(a, low, high)
+        quicksort(a, low, pi - 1)
+        quicksort(a, pi + 1, high)
+
+
+# Function to sort and print the top 5 scores
+def topf(a, n):
+    quicksort(a, 0, n - 1)
+    print("Sorted List: ", a)
+    print("Top 5 scores:")
+    for i in range(min(5, len(a))):
+        print(f"Top {i + 1} score: {a[-(i + 1)]}")  # Getting scores from the end
+
+
+# Main menu loop
+flag = True
+while flag:
+    print("Choices: ")
+    print("1. Enter values")
+    print("2. Quick Sort")
+    print("3. Top Five Scores")
+    print("4. Exit")
+    ch = int(input("Enter your choice: "))
+
+    if ch == 1:
+        enterval()
+    elif ch == 2:
+        quicksort(roll, 0, len(roll) - 1)
+        print("$ Quick Sort $")
+        print("Sorted List: ", roll)
+        print()
+    elif ch == 3:
+        if len(roll) >= 5:
+            topf(roll, len(roll))
+        else:
+            print("Not enough data to determine top five scores. Please enter more data.")
+    elif ch == 4:
+        print("Thank You!!!")
+        flag = False
+    else:
+        print("Invalid Choice")
+    print()
+
+ 
+
+ 
