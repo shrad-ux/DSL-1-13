@@ -1,0 +1,77 @@
+cricket = [] 
+badminton = [] 
+football = []
+n = int(input("Enter no. of students playing cricket: "))
+  for i in range(n):
+  name = input("Enter student name: ") cricket.append(name)
+print("Final list for cricket") 
+print(cricket)
+print()
+
+m = int(input("Enter no. of students palying badminton: "))
+for i in range(m):
+  name = input("Enter student name: ") 
+  badminton.append(name)
+print("Final list for badminton") 
+print(badminton)
+print()
+
+p = int(input("Enter no. of students palying football: ")) 
+for i in range(p):
+  name = input("Enter student name: ") 
+  football.append(name)
+print("Final list for football") 
+print(football)
+print()
+
+#cricket and badminton
+
+print("Students playing both cricket and badminton") 
+for i in cricket:
+  for j in badminton: 
+    if (i == j):
+      print(i)
+print()
+
+#cricket or badminton
+print("Students playing either cricket or badminton but not both") 
+l = []
+l.extend(cricket) 
+l.extend(badminton) 
+for i in l:
+  if (l.count(i) == 1): 
+      print(i)
+print()
+
+#neither cricket nor badminton
+print("Students playing neither cricket nor badminton") f = False
+l1 = []
+ 
+for i in football:
+  for j in cricket:
+    if (i == j):
+        f = True 
+        break
+  for k in badminton:
+    if (i == k):
+      f = True
+      break
+    if (f == False):
+      l1.append(i)
+for i in l1:
+  print(i)
+print()
+
+#cricket and football not badminton
+print("Students playing cricket and football but not badminton") 
+l.extend(football)
+for i in badminton: 
+  for k in l:
+    if (i != k):
+      if (l.count(k) > 1): 
+      print(k)
+
+
+
+
+
