@@ -1,0 +1,124 @@
+global r, c
+
+
+def display(mat, r):
+    for i in range(r):
+        print(mat[i])
+
+
+def trs(a, r, c):
+    for i in range(r):
+        for j in range(c):
+            if (i < j):
+                temp = a[i][j]
+                a[i][j] = a[j][i]
+                a[j][i] = temp
+    print("Transposed matrix is ")
+    display(a, r)
+    print()
+
+
+def enterval(mat1, mat2, r, c):
+    print("Enter values for matrix 1 ->")
+    for i in range(r):
+        mat = []
+        for j in range(c):
+            m = int(input("Enter value for %d, %d: " % (i, j)))
+            mat.append(m)
+        mat1.append(mat)
+    display(mat1, r)
+    print()
+
+    print("Enter values for matrix 2 ->")
+    for i in range(r):
+        mat = []
+        for j in range(c):
+            m = int(input("Enter value for %d, %d: " % (i, j)))
+            mat.append(m)
+        mat2.append(mat)
+    display(mat2, r)
+    print()
+
+
+# Addition of matrices
+def addr(mat1, mat2, r, c):
+    add = []
+    for i in range(r):
+        mat = []
+        for j in range(c):
+            m = mat1[i][j] + mat2[i][j]
+            mat.append(m)
+        add.append(mat)
+    print("Added matrix is ")
+    display(add, r)
+    print()
+
+
+# Subtraction of matrices
+def subt(mat1, mat2, r, c):
+    sub = []
+    for i in range(r):
+        mat = []
+        for j in range(c):
+            m = mat1[i][j] - mat2[i][j]
+            mat.append(m)
+        sub.append(mat)
+    print("Subtracted matrix is ")
+    display(sub, r)
+    print()
+
+
+# Multiplication of matrices
+def mult(mat1, mat2, r, c):
+    mul = []
+    for i in range(r):
+        mat = []
+        for j in range(c):
+            mat.append(0)
+        mul.append(mat)
+
+    for i in range(r):
+        for j in range(c):
+            for k in range(r):
+                mul[i][j] += mat1[i][k] * mat2[k][j]
+    print("Multiplied matrix is ")
+    display(mul, r)
+    print()
+
+
+r = int(input("Enter number of rows: "))
+c = int(input("Enter number of columns: "))
+mat1 = []
+mat2 = []
+
+
+def main():
+    flag = True
+    while flag:
+        print("Choices: ")
+        print("1. Enter value")
+        print("2. Added matrix")
+        print("3. Subtracted matrix")
+        print("4. Multiplied matrix")
+        print("5. Transpose of matrix")
+        print("6. Exit")
+        ch = int(input("Enter your choice: "))
+        if ch == 1:
+            enterval(mat1, mat2, r, c)
+        elif ch == 2:
+            addr(mat1, mat2, r, c)
+        elif ch == 3:
+            subt(mat1, mat2, r, c)
+        elif ch == 4:
+            mult(mat1, mat2, r, c)
+        elif ch == 5:
+            trs(mat1, r, c)
+            trs(mat2, r, c)
+        elif ch == 6:
+            print("Thank you")
+            flag = False
+        else:
+            print("Invalid choice!!")
+
+
+
