@@ -1,0 +1,223 @@
+#include <bits/stdc++.h>
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int prn;
+    int count = 0;
+    string name;
+    Node* next;
+
+    Node(int prn, string name) {
+        this->prn = prn;
+        this->name = name;
+        this->next = next;
+    }
+
+public:
+    void addpresident(Node* head);
+    Node* delpresident(Node* head);
+    void addmembers(Node* head);
+    Node* delmembers(Node* head);
+    void addsecretary(Node* head);
+    Node* delsecretary(Node* head);
+    void countOfMembers();
+    void display(Node* head);
+    Node* combine(Node* head1, Node* head2);
+};
+
+void Node::addpresident(Node* head) {
+    count++;
+    int prn;
+    string name;
+    cout << "Enter PRN number : ";
+    cin >> prn;
+    cout << "Enter name : ";
+    cin >> name;
+    Node* temp = new Node(prn, name);
+    if (head == NULL) {
+        head = temp;
+        return;
+    }
+    temp->next = head->next;
+    head->next = temp;
+}
+
+Node* Node::delpresident(Node* head) {
+    Node* temp = head;
+    head = temp->next;
+    free(temp);
+    return head;
+}
+
+void Node::addmembers(Node* head) {
+    count++;
+    int prn;
+    string name;
+    cout << "Enter PRN number : ";
+    cin >> prn;
+    cout << "Enter name : ";
+    cin >> name;
+    Node* temp = new Node(prn, name);
+    if (head == NULL) {
+        cout << "President must be added first " << endl;
+        return;
+    }
+    Node* president = head;
+    temp->next = president->next;
+    president->next = temp;
+}
+
+Node* Node::delmembers(Node* head) {
+    Node* temp, *t1;
+    int pn;
+    temp = head;
+    cout << "\nEnter the PRN number after which you want to delete member: ";
+    cin >> pn;
+    while (temp != NULL) {
+        if (temp->prn == pn) {
+            t1 = temp->next;
+            temp->next = t1->next;
+            free(t1);
+            break;
+        }
+        temp = temp->next;
+    }
+    cout << "\n\nMember removed successfully!!";
+    return head;
+}
+
+void Node::addsecretary(Node* head) {
+    count++;
+    int prn;
+    string name;
+    cout << "Enter PRN number : ";
+    cin >> prn;
+    cout << "Enter name : ";
+    cin >> name;
+    Node* gNode = new Node(prn, name);
+    if (head == NULL) {
+        cout << "President must be added first " << endl;
+        return;
+    }
+    Node* current = head;
+
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    gNode->next = current->next;
+    current->next = gNode;
+}
+
+Node* Node::delsecretary(Node* head) {
+    Node* temp, *t1;
+    temp = head;
+    while (temp->next != NULL) {
+        t1 = temp;
+        temp = temp->next;
+    }
+    t1->next = NULL;
+    free(temp);
+    return head;
+}
+
+void Node::display(Node* head) {
+    Node* current = head;
+    cout << "Printing LL: " << endl;
+    while (current != NULL) {
+        cout << current->prn << " " << current->name << endl;
+        current = current->next;
+    }
+}
+
+void Node::countOfMembers() {
+    cout << "Total number of members: " << count << endl;
+}
+
+Node* Node::combine(Node* head1, Node* head2) {
+    Node *temp1, *temp2, *head3;
+    temp1 = temp2 = head3 = NULL;
+    temp1 = head1;
+    head3 = head1;
+    while (temp1->next != NULL) {
+        temp1 = temp1->next;
+    }
+    temp2 = head2;
+    temp1->next = temp2;
+    return (head3);
+}
+
+int main() {
+    Node obj1(0, "0");
+    Node obj2(0, "0");
+    Node* h1;
+    Node* h2;
+    Node* h3;
+    h1 = h2 = h3 = NULL;
+    cout << "\nChoices: " << endl;
+
+    cout << "1. Enter details of SE-A\n2. Enter details of SE-B\n3. Combine the two sections" << endl;
+    int choice;
+    cout << "Enter your choice : ";
+    cin >> choice;
+    switch (choice) {
+        case 1: {
+            bool flag = true;
+            while (flag) {
+                cout << "\nChoices: " << endl;
+                cout << "1.Add president\n2. Add secretary\n3. Add members\n4. Remove President\n5. Remove Secretary\n6. Remove Member\n7. Display List\n"
+                        "8. Count of the students\n9. Exit" << endl;
+                int ch;
+                cout << "Enter your choice : ";
+                cin >> ch;
+                switch (ch) {
+                    case 1:
+                        obj1.addpresident(h1);
+                        break;
+                    case 2:
+                        obj1.addsecretary(h1);
+                        break;
+                    case 3:
+                        obj1.addmembers(h1);
+                        break;
+                    case 4:
+                        h1 = obj1.delpresident(h1);
+                        break;
+                    case 5:
+                        h1 = obj1.delsecretary(h1);
+                        break;
+                    case 6:
+                        h1 = obj1.delmembers(h1);
+                        break;
+                    case 7:
+                        obj1.display(h1);
+                        break;
+                    case 8:
+                        obj1.countOfMembers();
+                        break;
+                    case 9:
+                        cout << "Thank you" << endl;
+                        flag = false;
+                        break;
+                    default:
+                        cout << "Invalid choice!" << endl;
+                        break;
+                }
+            }
+            break;
+        }
+        case 2: {
+            // Similar code as above for SE-B logic
+            break;
+        }
+        case 3: {
+            h3 = obj1.combine(h1, h2);
+            obj1.display(h3);
+            break;
+        }
+        default:
+            cout << "Invalid choice!" << endl;
+            break;
+    }
+}
