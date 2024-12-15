@@ -1,0 +1,145 @@
+#include <iostream>
+using namespace std;
+
+class node {
+public:
+    int roll;
+    node *next;
+    node *vanilla = NULL;
+    node *butter = NULL;
+
+    node(int roll) {
+        this->roll = roll;
+        this->next = roll;
+    }
+
+public:
+    void addVanilla();
+    void displayVanilla();
+    void addButter();
+    void displayButter();
+    void VanillaAndButter();
+    void VanillaOrButter();
+};
+
+void node::addVanilla() {
+    int p;
+    cout << "Enter roll number : ";
+    cin >> p;
+    node *temp = new node(p);
+    if (vanilla == NULL) {
+        vanilla = temp;
+        return;
+    } else {
+        temp->next = vanilla->next;
+        vanilla->next = temp;
+    }
+}
+
+void node::addButter() {
+    int p;
+    cout << "Enter roll number : ";
+    cin >> p;
+    node *temp = new node(p);
+    if (butter == NULL) {
+        butter = temp;
+        return;
+    } else {
+        temp->next = butter->next;
+        butter->next = temp;
+    }
+}
+
+void node::displayVanilla() {
+    node *cur = vanilla;
+    cout << "Displaying roll numbers of students who like Vanilla ice-cream : " << endl;
+    while (cur != NULL) {
+        cout << "Roll number : " << cur->roll << endl;
+        cur = cur->next;
+    }
+}
+
+void node::displayButter() {
+    node *cur = butter;
+    cout << "Displaying roll numbers of students who like Butter-Scotch ice-cream : " << endl;
+    while (cur != NULL) {
+        cout << "Roll number : " << cur->roll << endl;
+        cur = cur->next;
+    }
+}
+
+void node::VanillaAndButter() {
+    node *temp1 = vanilla;
+    node *temp2 = butter;
+    while (temp1 != NULL && temp2 != NULL) {
+        if (temp1->roll == temp2->roll) {
+            cout << "Common roll number is : " << temp1->roll << endl;
+        }
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+}
+
+void node::VanillaOrButter() {
+    node *temp1 = vanilla;
+    node *temp2 = butter;
+
+    while (temp1 != NULL) {
+        if (temp2 == NULL || temp1->roll != temp2->roll) {
+            cout << "Student who like Vanilla only : " << endl;
+            cout << "Roll number is " << temp1->roll << endl;
+        }
+        temp1 = temp1->next;
+    }
+
+    temp1 = butter;
+    while (temp1 != NULL) {
+        if (vanilla == NULL || temp1->roll != vanilla->roll) {
+            cout << "Student who like Butter-Scotch only : " << endl;
+            cout << "Roll number is " << temp1->roll << endl;
+        }
+        temp1 = temp1->next;
+    }
+}
+
+int main() {
+    node obj(0);
+    bool flag = true;
+
+    while (flag) {
+        cout << "Choices : " << endl;
+        cout << "1. Student who like Vanilla\n2. Student who like Butter-Scotch\n3. Display list of students who like Vanilla\n4. Display list of students who like Butter-Scotch\n"
+                "5. List of students who like Vanilla and Butter-scotch\n6. List of students who like Vanilla Or Butter-scotch\n7. Exit" << endl;
+        cout << "Enter your choice : ";
+        int ch;
+        cin >> ch;
+
+        switch (ch) {
+            case 1:
+                obj.addVanilla();
+                break;
+            case 2:
+                obj.addButter();
+                break;
+            case 3:
+                obj.displayVanilla();
+                break;
+            case 4:
+                obj.displayButter();
+                break;
+            case 5:
+                obj.VanillaAndButter();
+                break;
+            case 6:
+                obj.VanillaOrButter();
+                break;
+            case 7:
+                flag = false;
+                cout << "Program ended !!" << endl;
+                break;
+            default:
+                cout << "Invalid Choice " << endl;
+                break;
+        }
+    }
+}
