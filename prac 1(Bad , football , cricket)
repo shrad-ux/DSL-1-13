@@ -1,77 +1,65 @@
 cricket = [] 
 badminton = [] 
 football = []
+
+# Input for cricket
 n = int(input("Enter no. of students playing cricket: "))
-  for i in range(n):
-  name = input("Enter student name: ") cricket.append(name)
+for i in range(n):
+    name = input("Enter student name: ")
+    cricket.append(name)
 print("Final list for cricket") 
 print(cricket)
 print()
 
-m = int(input("Enter no. of students palying badminton: "))
+# Input for badminton
+m = int(input("Enter no. of students playing badminton: "))
 for i in range(m):
-  name = input("Enter student name: ") 
-  badminton.append(name)
+    name = input("Enter student name: ") 
+    badminton.append(name)
 print("Final list for badminton") 
 print(badminton)
 print()
 
-p = int(input("Enter no. of students palying football: ")) 
+# Input for football
+p = int(input("Enter no. of students playing football: ")) 
 for i in range(p):
-  name = input("Enter student name: ") 
-  football.append(name)
+    name = input("Enter student name: ") 
+    football.append(name)
 print("Final list for football") 
 print(football)
 print()
 
-#cricket and badminton
-
+# Students playing both cricket and badminton
 print("Students playing both cricket and badminton") 
 for i in cricket:
-  for j in badminton: 
-    if (i == j):
-      print(i)
+    if i in badminton:
+        print(i)
 print()
 
-#cricket or badminton
+# Students playing either cricket or badminton but not both
 print("Students playing either cricket or badminton but not both") 
 l = []
 l.extend(cricket) 
 l.extend(badminton) 
 for i in l:
-  if (l.count(i) == 1): 
-      print(i)
+    if l.count(i) == 1: 
+        print(i)
 print()
 
-#neither cricket nor badminton
-print("Students playing neither cricket nor badminton") f = False
+# Students playing neither cricket nor badminton
+print("Students playing neither cricket nor badminton") 
 l1 = []
- 
+
 for i in football:
-  for j in cricket:
-    if (i == j):
-        f = True 
-        break
-  for k in badminton:
-    if (i == k):
-      f = True
-      break
-    if (f == False):
-      l1.append(i)
+    if i not in cricket and i not in badminton:
+        l1.append(i)
+
 for i in l1:
-  print(i)
+    print(i)
 print()
 
-#cricket and football not badminton
+# Students playing cricket and football but not badminton
 print("Students playing cricket and football but not badminton") 
-l.extend(football)
-for i in badminton: 
-  for k in l:
-    if (i != k):
-      if (l.count(k) > 1): 
-      print(k)
-
-
-
-
-
+for i in cricket:
+    if i in football and i not in badminton:
+        print(i)
