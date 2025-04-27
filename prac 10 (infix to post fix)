@@ -1,75 +1,95 @@
 #include <iostream>
-#include <bits/stdc++.h>
+#include <stack>
+#include <cstring>
 using namespace std;
 
 int prec(char c) {
-    if (c == '/' || c == '*') {
-        return 2;
-    } else if (c == '+' || c == '-') {
-        return 1;
-    } else {
-        return -1;
-    }
+    if (c == '^') return 3;
+    else if (c == '*' || c == '/') return 2;
+    else if (c == '+' || c == '-') return 1;
+    else return -1;
 }
 
 void infixToPostfix(char s[]) {
     char result[1000];
     int resultIndex = 0;
-    int len = strlen(s);
-    char stack[1000];
-    int stackIndex = -1;
+    stack<char> stack;
 
+    int len = strlen(s);
     for (int i = 0; i < len; i++) {
         char c = s[i];
 
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+        if (isalnum(c)) { // checks if the character is an operand (number or alphabet)
             result[resultIndex++] = c;
-        } else {
-            while (stackIndex >= 0 && (prec(s[i]) < prec(stack[stackIndex]) || prec(s[i]) == prec(stack[stackIndex]))) {
-                result[resultIndex++] = stack[stackIndex--];
+        }
+        else if (c == '(') {  // opening parenthesis
+            stack.push(c);
+        }
+        else if (c == ')') {  // closing parenthesis
+            while (!stack.empty() && stack.top() != '(') {
+                result[resultIndex++] = stack.top();
+                stack.pop();
             }
-            stack[++stackIndex] = c;
+            if (!stack.empty()) stack.pop(); // remove '(' from stack
+        }
+        else {  // if it’s an operator
+            while (!stack.empty() && prec(c) <= prec(stack.top())) {
+                result[resultIndex++] = stack.top();
+                stack.pop();
+            }
+            stack.push(c);
         }
     }
 
-    while (stackIndex >= 0) {
-        result[resultIndex++] = stack[stackIndex--];
+    // Pop any remaining operators from the stack
+    while (!stack.empty()) {
+        result[resultIndex++] = stack.top();
+        stack.pop();
     }
-    result[resultIndex] = '\0';
-    cout << result << endl;
+
+    result[resultIndex] = '\0'; // end the string properly
+    cout << "\nPostfix expression: " << result << endl;
 }
 
 int main() {
-    char exp[50];
+    char exp[50] = "";  // initialize with an empty string
     bool flag = true;
 
     while (flag) {
-        cout << "Choices : " << endl;
-        cout << "1. Enter expression\n2. Process Infix to Postfix & display the results\n3. Exit" << endl;
+        // Print the menu and ask for a choice
+        cout << "\n=== MENU ===" << endl;
+        cout << "1. Enter expression" << endl;
+        cout << "2. Convert Infix to Postfix" << endl;
+        cout << "3. Exit" << endl;
+
         int ch;
-        cout << "Enter your choice : ";
+        cout << "Enter your choice: ";
         cin >> ch;
 
+        // Switch based on user input
         switch (ch) {
-            case 1:
-                cout << "Enter the expression : ";
-                cin >> exp;
-                cout << endl;
+            case 1:  // Enter expression
+                cout << "Enter the infix expression: ";
+                cin >> exp;  // Take input for the expression
                 break;
 
-            case 2:
-                infixToPostfix(exp);
-                cout << endl;
+            case 2:  // Convert and display the postfix
+                if (strlen(exp) == 0) {
+                    cout << "Please enter an expression first (Option 1)!" << endl;
+                } else {
+                    infixToPostfix(exp);  // Perform conversion and display
+                }
                 break;
 
-            case 3:
-                cout << "---------Program Ended" << endl;
-                flag = false;
+            case 3:  // Exit the program
+                cout << "Program Ended." << endl;
+                flag = false;  // Exit the loop
                 break;
 
-            default:
-                cout << "Invalid choice" << endl;
-                break;
+            default:  // Invalid choice handling
+                cout << "Invalid choice! Please try again." << endl;
         }
     }
+
+    return 0;
 }
