@@ -9,24 +9,27 @@ class Deque {
     int front, rear;
 public:
     Deque() {
-        front = rear = -1;
+        front = rear = -1;  // Initialize the deque as empty
     }
 
-public:
     void addFront();
     void addRear();
     void removeFront();
     void removeRear();
+    void display();
 };
 
 void Deque::addFront() {
     int num;
-    cout << "\n Enter item to insert : ";
+    cout << "\nEnter item to insert at front: ";
     cin >> num;
 
-    if (front <= 1) {
-        cout << "\n Cannot add item at front end" << endl;
+    if (front == 0) {  // Cannot insert at the front if it's already at the first position
+        cout << "\nQueue Overflow at front!" << endl;
         return;
+    } else if (front == -1) {  // If the deque is empty
+        front = rear = 0;
+        data[front] = num;
     } else {
         front--;
         data[front] = num;
@@ -35,68 +38,75 @@ void Deque::addFront() {
 
 void Deque::addRear() {
     int num;
-    cout << "\n Enter Item to insert : ";
+    cout << "\nEnter item to insert at rear: ";
     cin >> num;
 
-    if (rear == MAX) {
-        cout << "\n Queue is Overflow";
+    if (rear == MAX - 1) {  // If the deque is full
+        cout << "\nQueue Overflow at rear!" << endl;
         return;
+    } else if (front == -1) {  // If the deque is empty
+        front = rear = 0;
+        data[rear] = num;
     } else {
         rear++;
         data[rear] = num;
-
-        if (rear == 0) rear = 1;
-        if (front == 0) front = 1;
     }
 }
 
 void Deque::removeFront() {
-    int num;
-
-    if (front == 0) {
-        cout << "\n Queue is Underflow\n";
+    if (front == -1) {  // If deque is empty
+        cout << "\nQueue Underflow!" << endl;
         return;
-    } else {
-        num = data[front];
-        cout << "\n Deleted item is : " << num << endl;
+    }
 
-        if (front == rear) {
-            front = 0;
-            rear = 0;
-        } else {
-            front++;
-        }
+    cout << "\nDeleted item from front: " << data[front] << endl;
+    if (front == rear) {  // Only one element is in the deque
+        front = rear = -1;
+    } else {
+        front++;
     }
 }
 
 void Deque::removeRear() {
-    int num;
-
-    if (rear == 0) {
-        cout << "\n Cannot delete item at rear end\n" << endl;
+    if (rear == -1) {  // If deque is empty
+        cout << "\nQueue Underflow!" << endl;
         return;
-    } else {
-        num = data[rear];
-
-        if (front == rear) {
-            front = 0;
-            rear = 0;
-        } else {
-            rear--;
-        }
-
-        cout << "\n Deleted item is : " << num << endl;
     }
+
+    cout << "\nDeleted item from rear: " << data[rear] << endl;
+    if (front == rear) {  // Only one element is in the deque
+        front = rear = -1;
+    } else {
+        rear--;
+    }
+}
+
+void Deque::display() {
+    if (front == -1) {
+        cout << "\nDeque is empty!" << endl;
+        return;
+    }
+
+    cout << "\nDeque elements: ";
+    for (int i = front; i <= rear; i++) {
+        cout << data[i] << " ";
+    }
+    cout << endl;
 }
 
 int main() {
     Deque obj;
-    int ch = 0;
+    int ch;
 
     do {
-        cout << "Choices : " << endl;
-        cout << "1. Insert Element at the front-end\n2. Insert Element at the rear-end\n3. Remove Element from the front\n4. Remove Element from the back\n5. Exit" << endl;
-        cout << "Enter your choice : ";
+        cout << "\nChoices: " << endl;
+        cout << "1. Insert Element at the front-end" << endl;
+        cout << "2. Insert Element at the rear-end" << endl;
+        cout << "3. Remove Element from the front" << endl;
+        cout << "4. Remove Element from the back" << endl;
+        cout << "5. Display elements in Deque" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Enter your choice: ";
         cin >> ch;
 
         switch (ch) {
@@ -113,11 +123,15 @@ int main() {
                 obj.removeRear();
                 break;
             case 5:
-                cout << "Program Ended !!!!" << endl;
+                obj.display();
+                break;
+            case 6:
+                cout << "Program Ended!" << endl;
                 break;
             default:
-                cout << "Invalid Choice " << endl;
-                break;
+                cout << "Invalid Choice!" << endl;
         }
-    } while (ch != 5);
+    } while (ch != 6);
+
+    return 0;
 }
