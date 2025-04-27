@@ -1,62 +1,70 @@
 n = int(input("Enter number of students: "))
 roll = []
-def enterval(roll,n):
+
+def enterval(roll, n):
+    roll.clear()
     for i in range(n):
         m = int(input("Enter roll number: "))
         roll.append(m)
     print("Final list of students: ")
     print(roll)
     print()
-#selection sort
-    def selection(roll,n):
-        print("$ Selection Sort $")
-        for i in range(n):
-            for j in range(i+1,n):
-                if (roll[i] > roll[j]):
-                    temp = roll[i]
-                    roll[i] = roll[j]
-                    roll[j] = temp
-        print("Sorted list: ")
-        print(roll)
-        print()
-#Bubble sort
-        def bubble(roll,n):
-            print("$ Bubble Sort $")
-            k = 0
-            while (k<n):
-                for i in range(n):
-                    if(i != (n-1)):
-                        if (roll[i] > roll[i+1]):
-                            temp = roll[i]
-                            roll[i] = roll[i+1]
-                            roll[i+1] = temp
-                k += 1
-            print("Sorted list: ")
-            print(roll)
-            print()
 
-            
-def topf(roll,n):
-    bubble(roll,n)
-    for i in range(1,n+1):
-        print("Top %d score"%(i),roll[-i])
+def selection(roll, n):
+    print("$ Selection Sort $")
+    for i in range(n):
+        for j in range(i+1, n):
+            if roll[i] > roll[j]:
+                temp = roll[i]
+                roll[i] = roll[j]
+                roll[j] = temp
+    print("Sorted list: ")
+    print(roll)
     print()
+
+def bubble(roll, n):
+    print("$ Bubble Sort $")
+    for k in range(n):
+        for i in range(n - 1):
+            if roll[i] > roll[i+1]:
+                temp = roll[i]
+                roll[i] = roll[i+1]
+                roll[i+1] = temp
+    print("Sorted list: ")
+    print(roll)
+    print()
+
+def topf(roll, n):
+    bubble(roll, n)  # Sort first using bubble
+    print("Top scores:")
+    count = min(5, n)  # Show top 5 or less if not enough students
+    for i in range(1, count + 1):
+        print("Top %d score: %d" % (i, roll[-i]))
+    print()
+
+def menu():
     f = True
-    while (f):
+    while f:
         print("Choices: ")
-        print("1. Enter values\n2. Selection Sort\n3. Bubble Sort\n4. Top Five Scores\n5. Exit")
+        print("1. Enter values")
+        print("2. Selection Sort")
+        print("3. Bubble Sort")
+        print("4. Top Five Scores")
+        print("5. Exit")
         ch = int(input("Enter your choice: "))
-        if (ch == 1):
-            enterval(roll,n)
-        elif (ch == 2):
+        if ch == 1:
+            enterval(roll, n)
+        elif ch == 2:
             selection(roll, n)
-        elif (ch == 3):
+        elif ch == 3:
             bubble(roll, n)
-        elif (ch == 4):
-            topf(roll,n)
-        elif (ch == 5):
+        elif ch == 4:
+            topf(roll, n)
+        elif ch == 5:
             print("Thank you")
             f = False
         else:
             print("Invalid Input")
-        print() 
+        print()
+
+menu()
